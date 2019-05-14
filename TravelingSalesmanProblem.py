@@ -1,6 +1,7 @@
 import sys
 import csv
 import googlemaps
+import pprint
 from datetime import datetime
 
 YOUR_API_KEY = sys.argv[1]
@@ -10,14 +11,24 @@ stops_filename = sys.argv[4]
 
 addresses = []
 
-with open(stops_filename, 'rb') as f:
+gmaps = googlemaps.Client(YOUR_API_KEY)
+pp = pprint.PrettyPrinter(indent=4)
+
+data = {}
+
+with open(stops_filename, 'r') as f:
     reader = csv.reader(f)
     for row in reader:
-        addresses.append(row[0])
-
+        address = row[0]
+        addresses.append(address)
+        geocode_result = gmaps.geocode(address)
+        formatted_address = geocode_result[0]['formatted_address']
+        data[formatted_address] = {'address': row[0],
+                                   'name': row[1].strip(),
+                                   'phone': row[2].strip(),
+                                   'email': row[3].strip()}
+        
 #print addresses
-
-gmaps = googlemaps.Client(key=YOUR_API_KEY)
 
 now = datetime.now()
 directions_result = gmaps.directions(origin=start_address,
@@ -28,13 +39,24 @@ directions_result = gmaps.directions(origin=start_address,
                                      departure_time=now)
 
 
-duration = 0.0
+geocode_result = gmaps.geocode(start_address)
+formatted_start_address = geocode_result[0]['formatted_address']
+
+duration_total = 0.0
 for legs in directions_result[0]['legs']:
-        duration = duration + float(legs['duration']['value'])
-        print legs['end_address'] + ": " + legs['distance']['text'] + " " + legs['duration']['text']
-        print ""
+    address = legs['end_address']
+    distance = legs['distance']['text']
+    duration = legs['duration']['text']
+    duration_total = duration_total + float(legs['duration']['value'])
+    if formatted_start_address != address:
+        name = data[address]['name']
+        phone = data[address]['phone']
+        email = data[address]['email']
+        print ("%s %s %s" % (name, phone, email))
+    print ("%s: %s %s" % (address, distance, duration))
+    print ("")
 
 stops = len(directions_result[0]['legs'])
 print ("count: %d" % (stops))
-print ("driving duration (est): %.1fhrs" % (round(duration / 60 / 60, 2)))
-print ("trip duration (est): %.1fhrs" % (round(duration / 60 / 60, 2) + (stops - 1) * 0.5))
+print ("driving duration (est): %.1fhrs" % (round(duration_total / 60 / 60, 2)))
+print ("trip duration (est): %.1fhrs" % (round(duration_total / 60 / 60, 2) + (stops - 1) * 0.5))
