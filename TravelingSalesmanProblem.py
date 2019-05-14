@@ -39,8 +39,8 @@ directions_result = gmaps.directions(origin=start_address,
                                      departure_time=now)
 
 
-geocode_result = gmaps.geocode(start_address)
-formatted_start_address = geocode_result[0]['formatted_address']
+geocode_result = gmaps.geocode(end_address)
+formatted_end_address = geocode_result[0]['formatted_address']
 
 duration_total = 0.0
 for legs in directions_result[0]['legs']:
@@ -48,7 +48,7 @@ for legs in directions_result[0]['legs']:
     distance = legs['distance']['text']
     duration = legs['duration']['text']
     duration_total = duration_total + float(legs['duration']['value'])
-    if formatted_start_address != address:
+    if formatted_end_address != address:
         name = data[address]['name']
         phone = data[address]['phone']
         email = data[address]['email']
