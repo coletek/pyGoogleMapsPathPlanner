@@ -61,6 +61,6 @@ for legs in directions_result[0]['legs']:
         duration_total += 0.5 * 3600
 
 stops = len(directions_result[0]['legs'])
-print ("count: %d" % (stops))
+print ("# of 30min stops: %d" % (stops))
 print ("driving duration (est): %.1fhrs" % (round((duration_total / 60 / 60  - (stops - 1) * 0.5), 2)))
 print ("trip duration (est): %.1fhrs" % (round(duration_total / 60 / 60, 2)))
