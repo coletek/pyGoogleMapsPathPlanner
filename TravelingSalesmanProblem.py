@@ -47,16 +47,20 @@ for legs in directions_result[0]['legs']:
     address = legs['end_address']
     distance = legs['distance']['text']
     duration = legs['duration']['text']
-    duration_total = duration_total + float(legs['duration']['value'])
+    duration_total += float(legs['duration']['value']) + 0.5
     if formatted_end_address != address:
         name = data[address]['name']
         phone = data[address]['phone']
         email = data[address]['email']
         print ("%s %s %s" % (name, phone, email))
-    print ("%s: %s %s" % (address, distance, duration))
+    eta = 9.0 + round(float(duration_total) / 60 / 60, 2)
+    print ("Duration (%s, %s): ETA %.2f" % (distance, duration, eta))
+    print ("%s" % (address))
     print ("")
+    if formatted_end_address != address:
+        duration_total += 0.5 * 3600
 
 stops = len(directions_result[0]['legs'])
 print ("count: %d" % (stops))
-print ("driving duration (est): %.1fhrs" % (round(duration_total / 60 / 60, 2)))
-print ("trip duration (est): %.1fhrs" % (round(duration_total / 60 / 60, 2) + (stops - 1) * 0.5))
+print ("driving duration (est): %.1fhrs" % (round((duration_total / 60 / 60  - (stops - 1) * 0.5), 2)))
+print ("trip duration (est): %.1fhrs" % (round(duration_total / 60 / 60, 2)))
