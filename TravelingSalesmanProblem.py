@@ -8,6 +8,7 @@ YOUR_API_KEY = sys.argv[1]
 start_address = sys.argv[2]
 end_address = sys.argv[3]
 stops_filename = sys.argv[4]
+start_time = float(sys.argv[5])
 
 addresses = []
 
@@ -53,7 +54,7 @@ for legs in directions_result[0]['legs']:
         phone = data[address]['phone']
         email = data[address]['email']
         print ("%s %s %s" % (name, phone, email))
-    eta = 9.0 + round(float(duration_total) / 60 / 60, 2)
+    eta = start_time + round(float(duration_total) / 60 / 60, 2)
     print ("Duration (%s, %s): ETA %.2f" % (distance, duration, eta))
     print ("%s" % (address))
     print ("")

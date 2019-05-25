@@ -3,7 +3,7 @@
 Google Maps Path Planning (e.g. travelling salesman problem)
 
 ```
-$ python3 TravelingSalesmanProblem.py YOUR_GOOGLEAPI_KEY "Your starting address" "Your ending address" example-addresses.csv
+$ python3 TravelingSalesmanProblem.py YOUR_GOOGLEAPI_KEY "Your starting address" "Your ending address" example-addresses.csv 9.0
 
 Dick 0400 000 002 dick@example.com
 Duration (13.1 km, 19 mins): ETA 9.32
