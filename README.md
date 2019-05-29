@@ -3,7 +3,7 @@
 Google Maps Path Planning (e.g. travelling salesman problem)
 
 ```
-$ python3 TravelingSalesmanProblem.py YOUR_GOOGLEAPI_KEY "Your starting address" "Your ending address" example-addresses.csv 9.0
+$ python3 TravelingSalesmanProblem.py YOUR_GOOGLEAPI_KEY "Your starting address" "Your ending address" example-addresses.csv 9.0 0.5
 
 Dick 0400 000 002 dick@example.com
 Duration (13.1 km, 19 mins): ETA 9.32
@@ -24,7 +24,7 @@ Shop 1A/142 Brisbane Rd, Labrador QLD 4215, Australia
 Duration (12.2 km, 20 mins): ETA 13.33
 Gold Coast QLD, Australia
 
-# of 30min stops: 5
+# of 0.5hr stops: 5
 driving duration (est): 2.3hrs
 trip duration (est): 4.3hrs
 ```

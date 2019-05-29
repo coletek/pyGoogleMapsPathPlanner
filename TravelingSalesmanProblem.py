@@ -9,6 +9,7 @@ start_address = sys.argv[2]
 end_address = sys.argv[3]
 stops_filename = sys.argv[4]
 start_time = float(sys.argv[5])
+stop_time = float(sys.argv[6])
 
 addresses = []
 
@@ -48,7 +49,7 @@ for legs in directions_result[0]['legs']:
     address = legs['end_address']
     distance = legs['distance']['text']
     duration = legs['duration']['text']
-    duration_total += float(legs['duration']['value']) + 0.5
+    duration_total += float(legs['duration']['value']) + stop_time
     if formatted_end_address != address:
         name = data[address]['name']
         phone = data[address]['phone']
@@ -59,9 +60,9 @@ for legs in directions_result[0]['legs']:
     print ("%s" % (address))
     print ("")
     if formatted_end_address != address:
-        duration_total += 0.5 * 3600
+        duration_total += stop_time * 3600
 
 stops = len(directions_result[0]['legs'])
-print ("# of 30min stops: %d" % (stops))
-print ("driving duration (est): %.1fhrs" % (round((duration_total / 60 / 60  - (stops - 1) * 0.5), 2)))
-print ("trip duration (est): %.1fhrs" % (round(duration_total / 60 / 60, 2)))
+print ("# of %f.2hr stops: %d" % (stop_time, stops))
+print ("driving duration (est): %.1fhrs" % (round((duration_total / 60 / 60  - (stops - 1) * stop_time), 2)))
+print ("trip duration (est): %.1fhrs\n" % (round(duration_total / 60 / 60, 2)))
