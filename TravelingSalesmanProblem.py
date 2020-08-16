@@ -62,7 +62,8 @@ for legs in directions_result[0]['legs']:
     print ("Address: %s" % (address))
     print ("Duration: %s, %s" % (distance, duration))
     print ("ETA: %.2f" % (eta / 60.0 / 60.0))
-    print ("Stop Time: %.2fhr" % (stop_time / 60.0 / 60.0))
+    if formatted_end_address != address:
+        print ("Stop Time: %.2fhr" % (stop_time / 60.0 / 60.0))
     print ("")
     #if formatted_end_address != address:
     #    duration_total += stop_time * 3600
