@@ -57,10 +57,12 @@ for legs in directions_result[0]['legs']:
         phone = data[address]['phone']
         email = data[address]['email']
         stop_time = float(data[address]['stop_time']) * 60 * 60
-        print ("%s %s %s %.2fhr" % (name, phone, email, stop_time / 60.0 / 60.0))
+        print ("Contact Details: %s %s %s" % (name, phone, email))
     eta += legs['duration']['value']
-    print ("Duration (%s, %s): ETA %.2f" % (distance, duration, eta / 60.0 / 60.0))
-    print ("%s" % (address))
+    print ("Address: %s" % (address))
+    print ("Duration: %s, %s" % (distance, duration))
+    print ("ETA: %.2f" % (eta / 60.0 / 60.0))
+    print ("Stop Time: %.2fhr" % (stop_time / 60.0 / 60.0))
     print ("")
     #if formatted_end_address != address:
     #    duration_total += stop_time * 3600
@@ -68,6 +70,6 @@ for legs in directions_result[0]['legs']:
     eta += stop_time
     
 stops = len(directions_result[0]['legs'])
-print ("# of %.2fhr stops: %d" % (stop_time, stops))
+print ("# of stops: %d" % (stops))
 print ("driving duration (est): %.1fhrs" % (driving_total / 60.0 / 60.0))
 print ("trip duration (est): %.1fhrs" % ((eta - start_time * 60.0 * 60.0) / 60.0 / 60.0))
